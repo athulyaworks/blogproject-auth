@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+ <h2>Welcome to your Dashboard,{{ user.username }}!</h2>
+
+ {% if show_popup %}
+ <div class="alert alert-success">
+    🎉 Welcome back!
+ </div>
+ {% endif %}
+
+ <p>Your Theme is: {{ theme }}</p>
+ {% endblock %}

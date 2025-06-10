@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Welcome to My Blog</h1>
+
+    {% if user.is_authenticated %}
+        <p>Hello, <strong>{{ user.username }}</strong> 👋</p>
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}" class="btn btn-primary me-2">Login</a>
+        <a href="{% url 'register' %}" class="btn btn-success">Register</a>
+    {% endif %}
+
+    <hr>
+    <h3>Latest Blog Posts</h3>
+    <ul class="list-group mt-3">
+        {% for post in posts %}
+            <li class="list-group-item">
+                <strong>{{ post.title }}</strong> by {{ post.author.username }} <br>
+                <small class="text-muted">{{ post.created_at }}</small>
+                <p>{{ post.content|truncatewords:20 }}</p>
+            </li>
+        {% empty %}
+            <li class="list-group-item">No blog posts yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
